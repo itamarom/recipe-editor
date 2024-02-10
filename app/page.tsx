@@ -267,56 +267,56 @@ const MainPage = () => {
         variant="flushed"
         focusBorderColor="teal.300"
       />
-
-      <Table variant="striped" colorScheme="teal">
-        <Thead>
-          <Tr>
-            <Th></Th>
-            <Th>Ingredient</Th>
-            <Th>Amount</Th>
-            <Th>Calories</Th>
-            <Th>Protein</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {ingredients.map((ingredient, index) => (
-            <Tr key={index}>
-              <Td width={50}>
-                <Button
-                  colorScheme="red"
-                  size="sm"
-                  onClick={() => deleteIngredient(index)}
-                >
-                  X
-                </Button>
-              </Td>
-              <Td>{ingredient.macros?.name || "Unnamed Ingredient"}</Td>
-              <Td>
-                {ingredient.amount} {ingredient.unit}
-              </Td>
-              <Td>{calculateCalories(ingredient)?.calories}</Td>{" "}
-              <Td>{calculateCalories(ingredient)?.protein}</Td>
+      <Box overflow={"scroll"}>
+        <Table variant="striped" colorScheme="teal">
+          <Thead>
+            <Tr>
+              <Th></Th>
+              <Th>Ingredient</Th>
+              <Th>Amount</Th>
+              <Th>Calories</Th>
+              <Th>Protein</Th>
             </Tr>
-          ))}
+          </Thead>
+          <Tbody>
+            {ingredients.map((ingredient, index) => (
+              <Tr key={index}>
+                <Td width={50}>
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    onClick={() => deleteIngredient(index)}
+                  >
+                    X
+                  </Button>
+                </Td>
+                <Td>{ingredient.macros?.name || "Unnamed Ingredient"}</Td>
+                <Td>
+                  {ingredient.amount} {ingredient.unit}
+                </Td>
+                <Td>{calculateCalories(ingredient)?.calories}</Td>{" "}
+                <Td>{calculateCalories(ingredient)?.protein}</Td>
+              </Tr>
+            ))}
 
-          <Tr>
-            <Td></Td>
-            <Td>Total</Td>
-            <Td>{total.grams} grams</Td>
-            <Td>{total.calories}</Td>
-            <Td>{total.protein}</Td>
-          </Tr>
+            <Tr>
+              <Td></Td>
+              <Td>Total</Td>
+              <Td>{total.grams} grams</Td>
+              <Td>{total.calories}</Td>
+              <Td>{total.protein}</Td>
+            </Tr>
 
-          <Tr>
-            <Td></Td>
-            <Td>Total (per portion)</Td>
-            <Td>{total.grams / (portions || 1)} grams</Td>
-            <Td>{total.calories / (portions || 1)}</Td>
-            <Td>{total.protein / (portions || 1)}</Td>
-          </Tr>
-        </Tbody>
-      </Table>
-
+            <Tr>
+              <Td></Td>
+              <Td>Total (per portion)</Td>
+              <Td>{total.grams / (portions || 1)} grams</Td>
+              <Td>{total.calories / (portions || 1)}</Td>
+              <Td>{total.protein / (portions || 1)}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </Box>
       <Box mt={6}>
         <Input
           type="text"
