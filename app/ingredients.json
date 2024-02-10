@@ -106,8 +106,8 @@
   {
     "name": "Rice Krispies",
     "calories_per_gram": 3.86,
-    "protein_per_gram": 0.07,
-    "grams_per_cup": 30
+    "protein_per_gram": 0.08,
+    "grams_per_unit": 31
   },
   {
     "name": "Rolled oats",
@@ -126,6 +126,12 @@
     "calories_per_gram": 3.57,
     "protein_per_gram": 0.06,
     "grams_per_cup": 160
+  },
+  {
+    "name": "Cottage cheese (5%)",
+    "calories_per_gram": 0.95,
+    "protein_per_gram": 0.11,
+    "grams_per_cup": 162
   },
   {
     "name": "Avocado",
@@ -212,5 +218,22 @@
     "name": "Spaghetti (raw)",
     "calories_per_gram": 3.56,
     "protein_per_gram": 0.13
+  },
+  {
+    "name": "Caramelized Almonds chocolate snack",
+    "calories_per_gram": 5.53,
+    "protein_per_gram": 0.07
+  },
+  {
+    "name": "Chia seeds",
+    "calories_per_gram": 4.86,
+    "protein_per_gram": 0.17,
+    "grams_per_cup": 172
+  },
+  {
+    "name": "Cocoa powder",
+    "calories_per_gram": 2.93,
+    "protein_per_gram": 0.2,
+    "grams_per_cup": 101
   }
 ]
