@@ -64,7 +64,7 @@ function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
   let grams;
   if (ingredient.unit === Units.Unit) {
     if (!macros.grams_per_unit) {
-      throw new Error(`Missing grams_per_unit for ${ingredient.name}`);
+      throw new Error(`Missing grams_per_unit for ${macros.name}`);
     }
     grams = ingredient.amount * macros.grams_per_unit;
   } else if (ingredient.unit === Units.Grams) {
@@ -73,17 +73,17 @@ function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
     grams = ingredient.amount * 1000;
   } else if (ingredient.unit === Units.Cup) {
     if (!macros.grams_per_cup) {
-      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+      throw new Error(`Missing grams_per_cup for ${macros.name}`);
     }
     grams = ingredient.amount * macros.grams_per_cup;
   } else if (ingredient.unit === Units.Tsp) {
     if (!macros.grams_per_cup) {
-      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+      throw new Error(`Missing grams_per_cup for ${macros.name}`);
     }
     grams = ingredient.amount * TspToCup * macros.grams_per_cup;
   } else if (ingredient.unit === Units.Tbsp) {
     if (!macros.grams_per_cup) {
-      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+      throw new Error(`Missing grams_per_cup for ${macros.name}`);
     }
     grams = ingredient.amount * TbspToCup * macros.grams_per_cup;
   }
@@ -130,11 +130,13 @@ const MainPage = () => {
   };
   const fuse = new Fuse(ingredientsJson, fuseOptions);
 
-  const handleRecipeTitleChange = (e) => {
+  const handleRecipeTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRecipeTitle(e.target.value);
   };
 
-  const handleIngredientNameChange = (e) => {
+  const handleIngredientNameChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = e.target.value;
     // Perform search directly here
     setNewIngredientName(value);
