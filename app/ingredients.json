@@ -1,0 +1,216 @@
+[
+  {
+    "name": "Sugar",
+    "calories_per_gram": 3.87,
+    "protein_per_gram": 0,
+    "grams_per_cup": 200
+  },
+  {
+    "name": "Butter",
+    "calories_per_gram": 7.16,
+    "protein_per_gram": 0.04,
+    "grams_per_cup": 227
+  },
+  {
+    "name": "Flour (All-purpose)",
+    "calories_per_gram": 3.64,
+    "protein_per_gram": 0.1,
+    "grams_per_cup": 125
+  },
+  {
+    "name": "Egg (large)",
+    "calories_per_gram": 1.55,
+    "protein_per_gram": 0.13,
+    "grams_per_unit": 57
+  },
+  {
+    "name": "Olive oil",
+    "calories_per_gram": 8.8,
+    "protein_per_gram": 0,
+    "grams_per_cup": 216
+  },
+  {
+    "name": "Milk (whole)",
+    "calories_per_gram": 0.6,
+    "protein_per_gram": 0.03,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Chicken breast (raw)",
+    "calories_per_gram": 1.2,
+    "protein_per_gram": 0.21
+  },
+  {
+    "name": "Chicken breast (cooked)",
+    "calories_per_gram": 1.65,
+    "protein_per_gram": 0.31
+  },
+  {
+    "name": "Chicken thigh, skinless (raw)",
+    "calories_per_gram": 1.26,
+    "protein_per_gram": 0.19
+  },
+  {
+    "name": "Chicken thigh, skinless (cooked)",
+    "calories_per_gram": 1.75,
+    "protein_per_gram": 0.26
+  },
+  {
+    "name": "Flour tortilla (25cm)",
+    "calories_per_gram": 2.9,
+    "protein_per_gram": 0.08,
+    "grams_per_unit": 60
+  },
+  {
+    "name": "Milk",
+    "calories_per_gram": 0.6,
+    "protein_per_gram": 0.03,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "White sugar",
+    "calories_per_gram": 3.87,
+    "protein_per_gram": 0,
+    "grams_per_cup": 200
+  },
+  {
+    "name": "Honey",
+    "calories_per_gram": 3.04,
+    "protein_per_gram": 0.03,
+    "grams_per_cup": 340
+  },
+  {
+    "name": "Soy sauce",
+    "calories_per_gram": 0.53,
+    "protein_per_gram": 0.08,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Gochujang",
+    "calories_per_gram": 2.56,
+    "protein_per_gram": 0.06,
+    "grams_per_cup": 250
+  },
+  {
+    "name": "Peanut butter",
+    "calories_per_gram": 5.9,
+    "protein_per_gram": 0.25,
+    "grams_per_cup": 250
+  },
+  {
+    "name": "Peanut powder",
+    "calories_per_gram": 4.1,
+    "protein_per_gram": 0.5,
+    "grams_per_cup": 120
+  },
+  {
+    "name": "Rice Krispies",
+    "calories_per_gram": 3.86,
+    "protein_per_gram": 0.07,
+    "grams_per_cup": 30
+  },
+  {
+    "name": "Rolled oats",
+    "calories_per_gram": 3.88,
+    "protein_per_gram": 0.13,
+    "grams_per_cup": 80
+  },
+  {
+    "name": "Cornflour",
+    "calories_per_gram": 3.61,
+    "protein_per_gram": 0.03,
+    "grams_per_cup": 120
+  },
+  {
+    "name": "Potato flour",
+    "calories_per_gram": 3.57,
+    "protein_per_gram": 0.06,
+    "grams_per_cup": 160
+  },
+  {
+    "name": "Avocado",
+    "calories_per_gram": 1.6,
+    "protein_per_gram": 0.02,
+    "grams_per_cup": 150
+  },
+  {
+    "name": "Onion",
+    "calories_per_gram": 0.4,
+    "protein_per_gram": 0.01,
+    "grams_per_cup": 160
+  },
+  {
+    "name": "Cooked shrimps",
+    "calories_per_gram": 0.99,
+    "protein_per_gram": 0.24
+  },
+  {
+    "name": "Tomatoes",
+    "calories_per_gram": 0.18,
+    "protein_per_gram": 0.09,
+    "grams_per_cup": 180
+  },
+  {
+    "name": "Cucumbers",
+    "calories_per_gram": 0.15,
+    "protein_per_gram": 0.007,
+    "grams_per_cup": 120
+  },
+  {
+    "name": "Olive oil",
+    "calories_per_gram": 8.8,
+    "protein_per_gram": 0,
+    "grams_per_cup": 216
+  },
+  {
+    "name": "Parmesan (grated)",
+    "calories_per_gram": 4.31,
+    "protein_per_gram": 0.38,
+    "grams_per_cup": 100
+  },
+  {
+    "name": "Cheddar",
+    "calories_per_gram": 4.02,
+    "protein_per_gram": 0.25,
+    "grams_per_cup": 132
+  },
+  {
+    "name": "Gouda",
+    "calories_per_gram": 3.57,
+    "protein_per_gram": 0.25,
+    "grams_per_cup": 132
+  },
+  {
+    "name": "Mozzarella",
+    "calories_per_gram": 2.77,
+    "protein_per_gram": 0.22,
+    "grams_per_cup": 132
+  },
+  {
+    "name": "Sour cream",
+    "calories_per_gram": 2.97,
+    "protein_per_gram": 0.03,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Pickled jalapenos",
+    "calories_per_gram": 0.17,
+    "protein_per_gram": 0.04,
+    "grams_per_cup": 90
+  },
+  {
+    "name": "Burger buns",
+    "calories_per_gram": 2.68,
+    "protein_per_gram": 0.09
+  },
+  {
+    "name": "Spaghetti (cooked)",
+    "calories_per_gram": 1.32,
+    "protein_per_gram": 0.05
+  },
+  {
+    "name": "Spaghetti (raw)",
+    "calories_per_gram": 3.56,
+    "protein_per_gram": 0.13
+  }
+]

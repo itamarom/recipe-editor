@@ -1,113 +1,396 @@
-import Image from "next/image";
+"use client";
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Select,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
+import Fuse from "fuse.js";
+import { useState } from "react";
+import ingredientsJsonRaw from "./ingredients.json";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+enum Units {
+  Grams = "grams",
+  Kg = "kg",
+  Tsp = "tsp",
+  Tbsp = "tbsp",
+  Cup = "cup",
+  Unit = "unit",
 }
+
+interface Ingredient {
+  macros: IngredientMacros;
+  amount: number;
+  unit: Units;
+}
+
+interface IngredientMacros {
+  name: string;
+  calories_per_gram: number;
+  protein_per_gram: number;
+  grams_per_cup?: number;
+  grams_per_unit?: number;
+}
+
+interface SavedRecipe {
+  title: string;
+  ingredients: Ingredient[];
+}
+
+const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
+
+const TspToCup = 1 / 48;
+const TbspToCup = 1 / 16;
+
+function getIngredientMacros(name: string): IngredientMacros {
+  return ingredientsJson.filter((i) => i.name === name)[0];
+}
+
+interface MacrosSummary {
+  calories: number;
+  protein: number;
+}
+
+function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
+  const macros = ingredient.macros;
+  let grams;
+  if (ingredient.unit === Units.Unit) {
+    if (!macros.grams_per_unit) {
+      throw new Error(`Missing grams_per_unit for ${ingredient.name}`);
+    }
+    grams = ingredient.amount * macros.grams_per_unit;
+  } else if (ingredient.unit === Units.Grams) {
+    grams = ingredient.amount;
+  } else if (ingredient.unit === Units.Kg) {
+    grams = ingredient.amount * 1000;
+  } else if (ingredient.unit === Units.Cup) {
+    if (!macros.grams_per_cup) {
+      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+    }
+    grams = ingredient.amount * macros.grams_per_cup;
+  } else if (ingredient.unit === Units.Tsp) {
+    if (!macros.grams_per_cup) {
+      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+    }
+    grams = ingredient.amount * TspToCup * macros.grams_per_cup;
+  } else if (ingredient.unit === Units.Tbsp) {
+    if (!macros.grams_per_cup) {
+      throw new Error(`Missing grams_per_cup for ${ingredient.name}`);
+    }
+    grams = ingredient.amount * TbspToCup * macros.grams_per_cup;
+  }
+
+  if (grams === undefined) {
+    alert("Bad unit:" + ingredient.unit);
+    return null;
+  }
+
+  return {
+    calories: grams * macros.calories_per_gram,
+    protein: grams * macros.protein_per_gram,
+  };
+}
+
+function calculateCaloriesForAll(ingredients: Ingredient[]): MacrosSummary {
+  const perIngredient = ingredients.map(calculateCalories).filter((v) => v);
+
+  return {
+    calories: perIngredient.map((i) => i?.calories!).reduce((a, b) => a + b, 0),
+    protein: perIngredient.map((i) => i?.protein!).reduce((a, b) => a + b, 0),
+  };
+}
+
+const EmptyIngredient: Partial<Ingredient> = {
+  amount: 0,
+  unit: Units.Grams,
+};
+
+const MainPage = () => {
+  const [recipeTitle, setRecipeTitle] = useState("");
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [newIngredient, setNewIngredient] = useState<Partial<Ingredient>>({
+    ...EmptyIngredient,
+  });
+
+  const [newIngredientName, setNewIngredientName] = useState("");
+  const [suggestions, setSuggestions] = useState<IngredientMacros[]>([]);
+
+  // Setup Fuse.js options
+  const fuseOptions = {
+    keys: ["name"],
+    threshold: 0.3, // Adjust this value to make the search more or less strict
+  };
+  const fuse = new Fuse(ingredientsJson, fuseOptions);
+
+  const handleRecipeTitleChange = (e) => {
+    setRecipeTitle(e.target.value);
+  };
+
+  const handleIngredientNameChange = (e) => {
+    const value = e.target.value;
+    // Perform search directly here
+    setNewIngredientName(value);
+    setNewIngredient((newIngredient) => ({
+      ...newIngredient,
+      macros: undefined,
+    }));
+
+    if (value.length > 0) {
+      const result = fuse.search(value);
+      setSuggestions(result.map((r) => r.item));
+    } else {
+      setSuggestions([]);
+    }
+  };
+  const selectSuggestion = (macros: IngredientMacros) => {
+    setNewIngredient((prevState) => ({ ...prevState, macros }));
+    setNewIngredientName(macros.name);
+    setSuggestions([]);
+  };
+
+  const exportRecipe = () => {
+    // Create a JSON string from the recipe title and ingredients
+    const recipeData = JSON.stringify(
+      {
+        title: recipeTitle,
+        ingredients: ingredients,
+      },
+      null,
+      2
+    ); // The `null` and `2` arguments format the JSON for readability
+
+    // Create a blob with the JSON data
+    const blob = new Blob([recipeData], { type: "application/json" });
+
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary anchor element and trigger the download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${recipeTitle.replace(/\s+/g, "_") || "recipe"}.json`; // Use the recipe title as the filename, replacing spaces with underscores
+    document.body.appendChild(a); // Append the anchor to the body
+    a.click(); // Trigger the download
+    document.body.removeChild(a); // Remove the anchor from the body
+
+    // Revoke the blob URL to free up resources
+    URL.revokeObjectURL(url);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (!file) {
+      alert("No file selected.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const content = e.target?.result;
+      try {
+        if (typeof content === "string") {
+          const recipe: SavedRecipe = JSON.parse(content);
+          if (recipe.title && Array.isArray(recipe.ingredients)) {
+            setRecipeTitle(recipe.title);
+            setIngredients(
+              recipe.ingredients.map((ingredient) => ({
+                ...ingredient,
+                macros: { ...ingredient.macros },
+              }))
+            );
+          } else {
+            alert("Invalid recipe format.");
+          }
+        }
+      } catch (error) {
+        console.error("Error reading file:", error);
+        alert("Failed to load recipe.");
+      }
+    };
+
+    reader.readAsText(file);
+  };
+
+  const addIngredient = () => {
+    if (newIngredient.macros && newIngredient.amount && newIngredient.unit) {
+      setIngredients([
+        ...ingredients,
+        {
+          macros: newIngredient.macros,
+          amount: newIngredient.amount,
+          unit: newIngredient.unit,
+        },
+      ]);
+      setNewIngredient({ ...EmptyIngredient });
+      setNewIngredientName("");
+    } else {
+      // Handle validation error
+      alert("Please fill in all fields for the ingredient.");
+    }
+  };
+
+  const deleteIngredient = (index: number) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients.splice(index, 1);
+    setIngredients(updatedIngredients);
+  };
+  const total = calculateCaloriesForAll(ingredients);
+
+  return (
+    <Box
+      p={5}
+      shadow="md"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+    >
+      <Heading mb={6} textAlign="center" size="lg" color="teal.400">
+        Macro Calculator
+      </Heading>
+      <Input
+        placeholder="Recipe Title"
+        value={recipeTitle}
+        onChange={handleRecipeTitleChange}
+        mb={4}
+        size="lg"
+        variant="flushed"
+        focusBorderColor="teal.300"
+      />
+
+      <Table variant="striped" colorScheme="teal">
+        <Thead>
+          <Tr>
+            <Th></Th>
+            <Th>Ingredient</Th>
+            <Th>Amount</Th>
+            <Th>Calories</Th>
+            <Th>Protein</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {ingredients.map((ingredient, index) => (
+            <Tr key={index}>
+              <Td width={50}>
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  onClick={() => deleteIngredient(index)}
+                >
+                  X
+                </Button>
+              </Td>
+              <Td>{ingredient.macros?.name || "Unnamed Ingredient"}</Td>
+              <Td>
+                {ingredient.amount} {ingredient.unit}
+              </Td>
+              <Td>{calculateCalories(ingredient)?.calories}</Td>{" "}
+              <Td>{calculateCalories(ingredient)?.protein}</Td>
+            </Tr>
+          ))}
+
+          <Tr>
+            <Td></Td>
+            <Td colSpan={2}>Total</Td>
+            <Td>{total.calories}</Td>
+            <Td>{total.protein}</Td>
+          </Tr>
+        </Tbody>
+      </Table>
+
+      <Box mt={6}>
+        <Input
+          type="text"
+          name="name"
+          value={newIngredientName}
+          onChange={handleIngredientNameChange}
+          placeholder="New Ingredient Name"
+          autoComplete="off"
+          variant="flushed"
+          focusBorderColor="teal.300"
+          mb={2}
+        />
+        {suggestions.length > 0 && (
+          <VStack align="start" mt={2}>
+            {suggestions.map((suggestion) => (
+              <Button
+                key={suggestion.name}
+                variant="ghost"
+                justifyContent="start"
+                onClick={() => selectSuggestion(suggestion)}
+                _hover={{ bg: "teal.100" }}
+              >
+                {suggestion.name}
+              </Button>
+            ))}
+          </VStack>
+        )}
+        <Input
+          type="number"
+          name="amount"
+          value={newIngredient.amount || ""}
+          onChange={(e) =>
+            setNewIngredient({
+              ...newIngredient,
+              [e.target.name]: parseFloat(e.target.value),
+            })
+          }
+          placeholder="Amount"
+          mr={2}
+          variant="flushed"
+          focusBorderColor="teal.300"
+          mb={2}
+        />
+        <Select
+          name="unit"
+          value={newIngredient.unit || Units.Grams}
+          onChange={(e) =>
+            setNewIngredient({
+              ...newIngredient,
+              [e.target.name]: e.target.value,
+            })
+          }
+          placeholder="Select unit"
+          mr={2}
+          variant="flushed"
+          focusBorderColor="teal.300"
+          mb={4}
+        >
+          {Object.values(Units).map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </Select>
+        <Button
+          disabled={!newIngredient.macros}
+          colorScheme="blue"
+          onClick={addIngredient}
+          w="full"
+        >
+          Add Ingredient
+        </Button>
+        <Input
+          type="file"
+          accept=".json"
+          onChange={handleFileChange}
+          variant="flushed"
+          focusBorderColor="teal.300"
+          mb={4}
+        />
+        <Button colorScheme="blue" onClick={exportRecipe} w="full">
+          Export recipe
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default MainPage;
