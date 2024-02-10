@@ -107,13 +107,18 @@
     "name": "Rice Krispies",
     "calories_per_gram": 3.86,
     "protein_per_gram": 0.08,
-    "grams_per_unit": 31
+    "grams_per_unit": 8
   },
   {
     "name": "Rolled oats",
-    "calories_per_gram": 3.88,
-    "protein_per_gram": 0.13,
+    "calories_per_gram": 3.38,
+    "protein_per_gram": 0.11,
     "grams_per_cup": 80
+  },
+  {
+    "name": "Rolled oats flour",
+    "calories_per_gram": 3.38,
+    "protein_per_gram": 0.11
   },
   {
     "name": "Cornflour",
@@ -232,8 +237,20 @@
   },
   {
     "name": "Cocoa powder",
-    "calories_per_gram": 2.93,
-    "protein_per_gram": 0.2,
+    "calories_per_gram": 3.79,
+    "protein_per_gram": 0.25,
     "grams_per_cup": 101
+  },
+  {
+    "name": "Chocolate protein pudding",
+    "calories_per_gram": 1.01,
+    "protein_per_gram": 0.077,
+    "grams_per_unit": 151
+  },
+  {
+    "name": "Rule1 Casein Protein Powder",
+    "calories_per_gram": 4.00,
+    "protein_per_gram": 0.83,
+    "grams_per_unit": 33
   }
 ]

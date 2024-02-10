@@ -57,9 +57,17 @@ interface MacrosSummary {
   grams: number;
 }
 
+function round(x?: number) {
+  if (!x) {
+    return x;
+  }
+  return Math.round(x * 10) / 10;
+}
+
 function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
   const macros = ingredient.macros;
   let grams;
+  
   if (ingredient.unit === Units.Unit) {
     if (!macros.grams_per_unit) {
       throw new Error(`Missing grams_per_unit for ${macros.name}`);
@@ -294,25 +302,25 @@ const MainPage = () => {
                 <Td>
                   {ingredient.amount} {ingredient.unit}
                 </Td>
-                <Td>{calculateCalories(ingredient)?.calories}</Td>{" "}
-                <Td>{calculateCalories(ingredient)?.protein}</Td>
+                <Td>{round(calculateCalories(ingredient)?.calories)}</Td>{" "}
+                <Td>{round(calculateCalories(ingredient)?.protein)}</Td>
               </Tr>
             ))}
 
             <Tr>
               <Td></Td>
               <Td>Total</Td>
-              <Td>{total.grams} grams</Td>
-              <Td>{total.calories}</Td>
-              <Td>{total.protein}</Td>
+              <Td>{round(total.grams)} grams</Td>
+              <Td>{round(total.calories)}</Td>
+              <Td>{round(total.protein)}</Td>
             </Tr>
 
             <Tr>
               <Td></Td>
               <Td>Total (per portion)</Td>
-              <Td>{total.grams / (portions || 1)} grams</Td>
-              <Td>{total.calories / (portions || 1)}</Td>
-              <Td>{total.protein / (portions || 1)}</Td>
+              <Td>{round(total.grams / (portions || 1))} grams</Td>
+              <Td>{round(total.calories / (portions || 1))}</Td>
+              <Td>{round(total.protein / (portions || 1))}</Td>
             </Tr>
           </Tbody>
         </Table>
