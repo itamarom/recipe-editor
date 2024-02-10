@@ -200,8 +200,9 @@ const MainPage = () => {
       try {
         if (typeof content === "string") {
           const recipe: SavedRecipe = JSON.parse(content);
-          if (recipe.title && Array.isArray(recipe.ingredients)) {
-            setRecipeTitle(recipe.title);
+
+          if (Array.isArray(recipe.ingredients)) {
+            setRecipeTitle(recipe.title || "");
             setIngredients(
               recipe.ingredients.map((ingredient) => ({
                 ...ingredient,
