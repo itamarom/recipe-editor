@@ -41,8 +41,9 @@ interface IngredientMacros {
 }
 
 interface SavedRecipe {
-  title: string;
+  recipeTitle: string;
   ingredients: Ingredient[];
+  portions: number;
 }
 
 const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
@@ -50,13 +51,10 @@ const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
 const TspToCup = 1 / 48;
 const TbspToCup = 1 / 16;
 
-function getIngredientMacros(name: string): IngredientMacros {
-  return ingredientsJson.filter((i) => i.name === name)[0];
-}
-
 interface MacrosSummary {
   calories: number;
   protein: number;
+  grams: number;
 }
 
 function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
@@ -96,6 +94,7 @@ function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
   return {
     calories: grams * macros.calories_per_gram,
     protein: grams * macros.protein_per_gram,
+    grams,
   };
 }
 
@@ -105,6 +104,7 @@ function calculateCaloriesForAll(ingredients: Ingredient[]): MacrosSummary {
   return {
     calories: perIngredient.map((i) => i?.calories!).reduce((a, b) => a + b, 0),
     protein: perIngredient.map((i) => i?.protein!).reduce((a, b) => a + b, 0),
+    grams: perIngredient.map((i) => i?.grams!).reduce((a, b) => a + b, 0),
   };
 }
 
@@ -121,6 +121,7 @@ const MainPage = () => {
   });
 
   const [newIngredientName, setNewIngredientName] = useState("");
+  const [portions, setPortions] = useState(1);
   const [suggestions, setSuggestions] = useState<IngredientMacros[]>([]);
 
   // Setup Fuse.js options
@@ -160,17 +161,15 @@ const MainPage = () => {
 
   const exportRecipe = () => {
     // Create a JSON string from the recipe title and ingredients
-    const recipeData = JSON.stringify(
-      {
-        title: recipeTitle,
-        ingredients: ingredients,
-      },
-      null,
-      2
-    ); // The `null` and `2` arguments format the JSON for readability
+    const recipeData: SavedRecipe = {
+      recipeTitle,
+      ingredients,
+      portions,
+    };
+    const recipeDataJson = JSON.stringify(recipeData, null, 2); // The `null` and `2` arguments format the JSON for readability
 
     // Create a blob with the JSON data
-    const blob = new Blob([recipeData], { type: "application/json" });
+    const blob = new Blob([recipeDataJson], { type: "application/json" });
 
     // Create a URL for the blob
     const url = URL.createObjectURL(blob);
@@ -202,7 +201,8 @@ const MainPage = () => {
           const recipe: SavedRecipe = JSON.parse(content);
 
           if (Array.isArray(recipe.ingredients)) {
-            setRecipeTitle(recipe.title || "");
+            setRecipeTitle(recipe.recipeTitle || "");
+            setPortions(recipe.portions);
             setIngredients(
               recipe.ingredients.map((ingredient) => ({
                 ...ingredient,
@@ -301,9 +301,18 @@ const MainPage = () => {
 
           <Tr>
             <Td></Td>
-            <Td colSpan={2}>Total</Td>
+            <Td>Total</Td>
+            <Td>{total.grams} grams</Td>
             <Td>{total.calories}</Td>
             <Td>{total.protein}</Td>
+          </Tr>
+
+          <Tr>
+            <Td></Td>
+            <Td>Total (per portion)</Td>
+            <Td>{total.grams / (portions || 1)} grams</Td>
+            <Td>{total.calories / (portions || 1)}</Td>
+            <Td>{total.protein / (portions || 1)}</Td>
           </Tr>
         </Tbody>
       </Table>
@@ -380,6 +389,20 @@ const MainPage = () => {
         >
           Add Ingredient
         </Button>
+        <Box className="flex items-center justify-center">
+          Portions:
+          <Input
+            type="number"
+            name="portions"
+            value={portions}
+            onChange={(e) => setPortions(parseFloat(e.target.value))}
+            placeholder="Portions"
+            mr={2}
+            variant="flushed"
+            focusBorderColor="teal.300"
+            mb={2}
+          />
+        </Box>
         <Input
           type="file"
           accept=".json"
