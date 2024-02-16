@@ -24,12 +24,6 @@
     "grams_per_unit": 57
   },
   {
-    "name": "Olive oil",
-    "calories_per_gram": 8.8,
-    "protein_per_gram": 0,
-    "grams_per_cup": 216
-  },
-  {
     "name": "Milk (whole)",
     "calories_per_gram": 0.6,
     "protein_per_gram": 0.03,
@@ -39,6 +33,12 @@
     "name": "Chicken breast (raw)",
     "calories_per_gram": 1.2,
     "protein_per_gram": 0.21
+  },
+  {
+    "name": "Rice Krispies",
+    "calories_per_gram": 3.86,
+    "protein_per_gram": 0.08,
+    "grams_per_unit": 8
   },
   {
     "name": "Chicken breast (cooked)",
@@ -104,12 +104,6 @@
     "grams_per_cup": 120
   },
   {
-    "name": "Rice Krispies",
-    "calories_per_gram": 3.86,
-    "protein_per_gram": 0.08,
-    "grams_per_unit": 8
-  },
-  {
     "name": "Rolled oats",
     "calories_per_gram": 3.38,
     "protein_per_gram": 0.11,
@@ -135,6 +129,12 @@
   {
     "name": "Cottage cheese (5%)",
     "calories_per_gram": 0.95,
+    "protein_per_gram": 0.11,
+    "grams_per_cup": 162
+  },
+  {
+    "name": "Cottage cheese (3%)",
+    "calories_per_gram": 0.77,
     "protein_per_gram": 0.11,
     "grams_per_cup": 162
   },
@@ -168,8 +168,32 @@
     "grams_per_cup": 120
   },
   {
+    "name": "Chicken stock",
+    "calories_per_gram": 0.36,
+    "protein_per_gram": 0.0025,
+    "grams_per_cup": 240
+  },
+  {
     "name": "Olive oil",
     "calories_per_gram": 8.8,
+    "protein_per_gram": 0,
+    "grams_per_cup": 216
+  },
+  {
+    "name": "Vegetable oil",
+    "calories_per_gram": 8.84,
+    "protein_per_gram": 0,
+    "grams_per_cup": 192
+  },
+  {
+    "name": "Hoisin Sauce",
+    "calories_per_gram": 2.14,
+    "protein_per_gram": 0,
+    "grams_per_cup": 280
+  },
+  {
+    "name": "Chilli oil",
+    "calories_per_gram": 6.74,
     "protein_per_gram": 0,
     "grams_per_cup": 216
   },
@@ -252,5 +276,107 @@
     "calories_per_gram": 4.00,
     "protein_per_gram": 0.83,
     "grams_per_unit": 33
+  },
+  {
+    "name": "Vital Wheat Gluten",
+    "calories_per_gram": 3.78,
+    "protein_per_gram": 0.75,
+    "grams_per_cup": 120
+  },
+  {
+    "name": "Chinese sesame paste",
+    "calories_per_gram": 5.93,
+    "protein_per_gram": 0.17,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Chili paste in oil",
+    "calories_per_gram": 2.5,
+    "protein_per_gram": 0.05,
+    "grams_per_cup": 224
+  },
+  {
+    "name": "Light soy sauce",
+    "calories_per_gram": 0.53,
+    "protein_per_gram": 0.08,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Dark soy sauce",
+    "calories_per_gram": 0.6,
+    "protein_per_gram": 0.1,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Chinese cooking wine",
+    "calories_per_gram": 2.2,
+    "protein_per_gram": 0.0,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Garlic",
+    "calories_per_gram": 1.49,
+    "protein_per_gram": 0.06,
+    "grams_per_cup": 150,
+    "grams_per_unit": 6
+  },
+  {
+    "name": "Garlic cloves",
+    "calories_per_gram": 1.49,
+    "protein_per_gram": 0.06,
+    "grams_per_cup": 150,
+    "grams_per_unit": 6
+  },
+  {
+    "name": "Ginger",
+    "calories_per_gram": 0.8,
+    "protein_per_gram": 0.018,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Chicken broth",
+    "calories_per_gram": 0.2,
+    "protein_per_gram": 0.02,
+    "grams_per_cup": 240
+  },
+  {
+    "name": "Sichuan peppercorns",
+    "calories_per_gram": 3.0,
+    "protein_per_gram": 0.11,
+    "grams_per_cup": 108
+  },
+  {
+    "name": "Pork mince",
+    "calories_per_gram": 2.93,
+    "protein_per_gram": 0.25
+  },
+  {
+    "name": "Sui Mi Ya Cai (preserved mustard greens)",
+    "calories_per_gram": 0.21,
+    "protein_per_gram": 0.02,
+    "grams_per_cup": 100
+  },
+  {
+    "name": "Fresh white noodles",
+    "calories_per_gram": 1.4,
+    "protein_per_gram": 0.05
+  },
+  {
+    "name": "Choy sum",
+    "calories_per_gram": 0.23,
+    "protein_per_gram": 0.022,
+    "grams_per_cup": 70
+  },
+  {
+    "name": "Green onions",
+    "calories_per_gram": 0.32,
+    "protein_per_gram": 0.019,
+    "grams_per_cup": 100
+  },
+  {
+    "name": "Peanuts",
+    "calories_per_gram": 5.9,
+    "protein_per_gram": 0.26,
+    "grams_per_cup": 146
   }
 ]

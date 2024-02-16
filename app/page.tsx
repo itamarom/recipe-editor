@@ -27,6 +27,7 @@ enum Units {
 }
 
 interface Ingredient {
+  name: string;
   macros: IngredientMacros;
   amount: number;
   unit: Units;
@@ -67,7 +68,7 @@ function round(x?: number) {
 function calculateCalories(ingredient: Ingredient): MacrosSummary | null {
   const macros = ingredient.macros;
   let grams;
-  
+
   if (ingredient.unit === Units.Unit) {
     if (!macros.grams_per_unit) {
       throw new Error(`Missing grams_per_unit for ${macros.name}`);
@@ -194,7 +195,14 @@ const MainPage = () => {
     URL.revokeObjectURL(url);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const importRecipeFromAlert = () => {
+    const inputJson = prompt("Enter recipe JSON please")?.trim();
+    if (inputJson) {
+      importRecipe(inputJson);
+    }
+  };
+
+  const importRecipeFromFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (!file) {
       alert("No file selected.");
@@ -206,20 +214,7 @@ const MainPage = () => {
       const content = e.target?.result;
       try {
         if (typeof content === "string") {
-          const recipe: SavedRecipe = JSON.parse(content);
-
-          if (Array.isArray(recipe.ingredients)) {
-            setRecipeTitle(recipe.recipeTitle || "");
-            setPortions(recipe.portions);
-            setIngredients(
-              recipe.ingredients.map((ingredient) => ({
-                ...ingredient,
-                macros: { ...ingredient.macros },
-              }))
-            );
-          } else {
-            alert("Invalid recipe format.");
-          }
+          importRecipe(content);
         }
       } catch (error) {
         console.error("Error reading file:", error);
@@ -230,11 +225,43 @@ const MainPage = () => {
     reader.readAsText(file);
   };
 
+  const importRecipe = (content: string) => {
+    const recipe: SavedRecipe = JSON.parse(content);
+
+    if (Array.isArray(recipe.ingredients)) {
+      setRecipeTitle(recipe.recipeTitle || "");
+      setPortions(recipe.portions);
+
+      setIngredients(
+        recipe.ingredients
+          .map((ingredient) => {
+            let macros = ingredient.macros;
+            if (!macros) {
+              macros = ingredientsJson.find(
+                (m) => m.name.toLowerCase() === ingredient.name.toLowerCase()
+              )!;
+            }
+
+            if (!macros) {
+              console.log(ingredient.name);
+              return null;
+            }
+
+            return { ...ingredient, macros: { ...macros } };
+          })
+          .filter((i) => i) as Ingredient[]
+      );
+    } else {
+      alert("Invalid recipe format.");
+    }
+  };
+
   const addIngredient = () => {
     if (newIngredient.macros && newIngredient.amount && newIngredient.unit) {
       setIngredients([
         ...ingredients,
         {
+          name: newIngredient.macros.name,
           macros: newIngredient.macros,
           amount: newIngredient.amount,
           unit: newIngredient.unit,
@@ -282,6 +309,7 @@ const MainPage = () => {
               <Th></Th>
               <Th>Ingredient</Th>
               <Th>Amount</Th>
+              <Th>Amount per portion</Th>
               <Th>Calories</Th>
               <Th>Protein</Th>
             </Tr>
@@ -301,8 +329,20 @@ const MainPage = () => {
                 <Td>{ingredient.macros?.name || "Unnamed Ingredient"}</Td>
                 <Td>
                   {ingredient.amount} {ingredient.unit}
+                  {ingredient.unit !== Units.Grams && (
+                    <>
+                      &nbsp; ({round(calculateCalories(ingredient)?.grams)}{" "}
+                      grams)
+                    </>
+                  )}
                 </Td>
-                <Td>{round(calculateCalories(ingredient)?.calories)}</Td>{" "}
+                <Td>
+                  {round(
+                    (calculateCalories(ingredient)?.grams || 0) / portions
+                  )}
+                  &nbsp;grams
+                </Td>
+                <Td>{round(calculateCalories(ingredient)?.calories)}</Td>
                 <Td>{round(calculateCalories(ingredient)?.protein)}</Td>
               </Tr>
             ))}
@@ -311,6 +351,7 @@ const MainPage = () => {
               <Td></Td>
               <Td>Total</Td>
               <Td>{round(total.grams)} grams</Td>
+              <Td></Td>
               <Td>{round(total.calories)}</Td>
               <Td>{round(total.protein)}</Td>
             </Tr>
@@ -319,13 +360,14 @@ const MainPage = () => {
               <Td></Td>
               <Td>Total (per portion)</Td>
               <Td>{round(total.grams / (portions || 1))} grams</Td>
+              <Td></Td>
               <Td>{round(total.calories / (portions || 1))}</Td>
               <Td>{round(total.protein / (portions || 1))}</Td>
             </Tr>
           </Tbody>
         </Table>
       </Box>
-      <Box mt={6}>
+      <Box mt={6} gap={1} display="flex" flexDir={"column"}>
         <Input
           type="text"
           name="name"
@@ -414,11 +456,15 @@ const MainPage = () => {
         <Input
           type="file"
           accept=".json"
-          onChange={handleFileChange}
+          onChange={importRecipeFromFile}
           variant="flushed"
           focusBorderColor="teal.300"
           mb={4}
         />
+
+        <Button colorScheme="blue" onClick={importRecipeFromAlert} w="full">
+          Load from JSON
+        </Button>
         <Button colorScheme="blue" onClick={exportRecipe} w="full">
           Export recipe
         </Button>
