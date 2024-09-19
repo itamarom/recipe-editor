@@ -86,6 +86,12 @@
     "grams_per_cup": 240
   },
   {
+    "name": "Potato",
+    "calories_per_gram": 0.77,
+    "protein_per_gram": 0.02,
+    "grams_per_unit": 150
+  },
+  {
     "name": "Gochujang",
     "calories_per_gram": 2.56,
     "protein_per_gram": 0.06,
@@ -135,6 +141,12 @@
   {
     "name": "Cottage cheese (3%)",
     "calories_per_gram": 0.77,
+    "protein_per_gram": 0.11,
+    "grams_per_cup": 162
+  },
+  {
+    "name": "Cottage cheese (1%)",
+    "calories_per_gram": 0.62,
     "protein_per_gram": 0.11,
     "grams_per_cup": 162
   },
