@@ -340,6 +340,11 @@
     "grams_per_unit": 6
   },
   {
+    "name": "Beef cut #14 (Avazit)",
+    "calories_per_gram": 1,
+    "protein_per_gram": 0.21
+  },
+  {
     "name": "Ginger",
     "calories_per_gram": 0.8,
     "protein_per_gram": 0.018,
