@@ -18,7 +18,8 @@ Convert this recipe to the TS structure and ingredient list.
 The name of the ingredient should be the name of the ingredient in the ingredients list.
 If you find an ingredient in the ingredients list, use that. If an ingredient is missing, include it in the recipe and add it to the missingIngredients array.
 Make sure to include all ingredients.
-It is *IMPERATIVE* that you include grams_per_cup and grams_per_unit for all ingredients.
+It is *IMPERATIVE* that you include grams_per_cup and grams_per_unit for all ingredients. These values must NEVER be 0.
+If an ingredient amount is per pack, then use grams and guess the grams per pack.
 
 Output the recipe as valid QueryOutput object in JSON format.
 I will tip you 1000$ if you do this correctly.
@@ -48,23 +49,24 @@ export function getOpenAiClient() {
 }
 
 export async function summarizeRecipe(client: OpenAI, urlOrText: string) {
-  let urlToRecipePrompt = '';
-  if (urlOrText.startsWith('http')) {
-    urlToRecipePrompt = `Here is link to a recipe: ${urlOrText}
-    Please fetch the recipe and give me only the ingredients list`
-  } else {
-    urlToRecipePrompt = `Here is a recipe: ${urlOrText}
+  // if (urlOrText.startsWith('http')) {
+  //   const urlContent = await fetch('https://corsproxy.io/?' + encodeURI(urlOrText));
+  //   urlOrText = await urlContent.text()
+  // }
+
+  const urlToRecipePrompt = `Here is a recipe: ${urlOrText}
     Please give me only the ingredients list`
-  }
 
   console.log('kek 1')
   const messages: any[] = []
   messages.push({ "role": "user", "content": urlToRecipePrompt })
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-2024-08-06",
+    model: "gpt-4o",
     messages: messages,
   });
+  console.log('kek 2 completion=', completion.choices[0])
   console.log('kek 2 completion=', completion.choices[0].message.content)
+
 
   messages.push({ "role": "assistant", "content": completion.choices[0].message.content })
   messages.push({ "role": "user", "content": queryStructured })
