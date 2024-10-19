@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Heading,
   Input,
   Select,
@@ -132,6 +133,8 @@ const MainPage = () => {
   const [newIngredientName, setNewIngredientName] = useState("");
   const [portions, setPortions] = useState(1);
   const [suggestions, setSuggestions] = useState<IngredientMacros[]>([]);
+
+  const [sortedByCals, setSortedByCals] = useState(false);
 
   // Setup Fuse.js options
   const fuseOptions = {
@@ -282,6 +285,12 @@ const MainPage = () => {
   };
   const total = calculateCaloriesForAll(ingredients);
 
+  const sortedIngredients = Object.entries(ingredients);
+  if (sortedByCals) {
+    sortedIngredients.sort(([originalKeyA, ingredientA], [originalKeyB, ingredientB]) => (calculateCalories(ingredientB)?.calories || 0) - (calculateCalories(ingredientA)?.calories || 0));
+  }
+  const sortedIngredientsIntKeys: [number, Ingredient][] = sortedIngredients.map(([key, ing]) => [parseInt(key), ing])
+
   return (
     <Box
       p={5}
@@ -302,6 +311,12 @@ const MainPage = () => {
         variant="flushed"
         focusBorderColor="teal.300"
       />
+      <Checkbox
+        isChecked={sortedByCals}
+        onChange={(e) => setSortedByCals(e.target.checked)}
+      >
+        Sort by Calories
+      </Checkbox>
       <Box overflow={"scroll"}>
         <Table variant="striped" colorScheme="teal">
           <Thead>
@@ -315,7 +330,7 @@ const MainPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {ingredients.map((ingredient, index) => (
+            {sortedIngredientsIntKeys.map(([index, ingredient]) => (
               <Tr key={index}>
                 <Td width={50}>
                   <Button
