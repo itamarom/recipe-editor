@@ -30,6 +30,18 @@
     "grams_per_cup": 240
   },
   {
+    "name": "Eggplant",
+    "calories_per_gram": 0.25,
+    "protein_per_gram": 0.01,
+    "grams_per_cup": 100
+  },
+  {
+    "name": "Yogurt (6% fat)",
+    "calories_per_gram": 0.82,
+    "protein_per_gram": 0.035,
+    "grams_per_cup": 240
+  },
+  {
     "name": "Chicken breast (raw)",
     "calories_per_gram": 1.2,
     "protein_per_gram": 0.21
@@ -136,19 +148,19 @@
     "name": "Cottage cheese (5%)",
     "calories_per_gram": 0.95,
     "protein_per_gram": 0.11,
-    "grams_per_cup": 162
+    "grams_per_cup": 225
   },
   {
     "name": "Cottage cheese (3%)",
     "calories_per_gram": 0.77,
     "protein_per_gram": 0.11,
-    "grams_per_cup": 162
+    "grams_per_cup": 225
   },
   {
     "name": "Cottage cheese (1%)",
     "calories_per_gram": 0.62,
     "protein_per_gram": 0.11,
-    "grams_per_cup": 162
+    "grams_per_cup": 225
   },
   {
     "name": "Avocado",
@@ -161,6 +173,19 @@
     "calories_per_gram": 0.4,
     "protein_per_gram": 0.01,
     "grams_per_cup": 160
+  },
+  {
+    "name": "Maple syrup",
+    "calories_per_gram": 2.6,
+    "protein_per_gram": 0,
+    "grams_per_cup": 320
+  },
+  {
+    "name": "Frozen strawberries",
+    "calories_per_gram": 0.33,
+    "protein_per_gram": 0.006,
+    "grams_per_cup": 150,
+    "grams_per_unit": 12
   },
   {
     "name": "Cooked shrimps",
@@ -345,6 +370,11 @@
     "protein_per_gram": 0.21
   },
   {
+    "name": "Ribeye Steak",
+    "calories_per_gram": 3.5,
+    "protein_per_gram": 0.25
+  },
+  {
     "name": "Ginger",
     "calories_per_gram": 0.8,
     "protein_per_gram": 0.018,
@@ -355,6 +385,18 @@
     "calories_per_gram": 0.2,
     "protein_per_gram": 0.02,
     "grams_per_cup": 240
+  },
+  {
+    "name": "Chickpea flour",
+    "calories_per_gram": 3.75,
+    "protein_per_gram": 0.22,
+    "grams_per_cup": 120
+  },
+  {
+    "name": "Whole wheat flour",
+    "calories_per_gram": 3.86,
+    "protein_per_gram": 0.13,
+    "grams_per_cup": 120
   },
   {
     "name": "Sichuan peppercorns",
