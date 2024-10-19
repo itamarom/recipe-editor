@@ -17,36 +17,8 @@ import {
 import Fuse from "fuse.js";
 import { useState } from "react";
 import ingredientsJsonRaw from "./ingredients.json";
-
-enum Units {
-  Grams = "grams",
-  Kg = "kg",
-  Tsp = "tsp",
-  Tbsp = "tbsp",
-  Cup = "cup",
-  Unit = "unit",
-}
-
-interface Ingredient {
-  name: string;
-  macros: IngredientMacros;
-  amount: number;
-  unit: Units;
-}
-
-interface IngredientMacros {
-  name: string;
-  calories_per_gram: number;
-  protein_per_gram: number;
-  grams_per_cup?: number;
-  grams_per_unit?: number;
-}
-
-interface SavedRecipe {
-  recipeTitle: string;
-  ingredients: Ingredient[];
-  portions: number;
-}
+import { summarizeRecipe } from "./ai";
+import { Ingredient, IngredientMacros, SavedRecipe, SavedRecipeSchema, Units } from "./types";
 
 const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
 
@@ -198,14 +170,13 @@ const MainPage = () => {
     URL.revokeObjectURL(url);
   };
 
-  const importRecipeFromAlert = () => {
-    const inputJson = prompt("Enter recipe JSON please")?.trim();
-    if (inputJson) {
-      importRecipe(inputJson);
-    }
-  };
+  const setFromSavedRecipe = (recipe: SavedRecipe) => {
+    setRecipeTitle(recipe.recipeTitle)
+    setPortions(recipe.portions);
+    setIngredients(recipe.ingredients);
+  }
 
-  const importRecipeFromFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (!file) {
       alert("No file selected.");
@@ -217,7 +188,7 @@ const MainPage = () => {
       const content = e.target?.result;
       try {
         if (typeof content === "string") {
-          importRecipe(content);
+          setFromSavedRecipe(SavedRecipeSchema.parse(JSON.parse(content)))
         }
       } catch (error) {
         console.error("Error reading file:", error);
@@ -228,35 +199,26 @@ const MainPage = () => {
     reader.readAsText(file);
   };
 
-  const importRecipe = (content: string) => {
-    const recipe: SavedRecipe = JSON.parse(content);
-
-    if (Array.isArray(recipe.ingredients)) {
-      setRecipeTitle(recipe.recipeTitle || "");
-      setPortions(recipe.portions);
-
-      setIngredients(
-        recipe.ingredients
-          .map((ingredient) => {
-            let macros = ingredient.macros;
-            if (!macros) {
-              macros = ingredientsJson.find(
-                (m) => m.name.toLowerCase() === ingredient.name.toLowerCase()
-              )!;
-            }
-
-            if (!macros) {
-              console.log(ingredient.name);
-              return null;
-            }
-
-            return { ...ingredient, macros: { ...macros } };
-          })
-          .filter((i) => i) as Ingredient[]
-      );
-    } else {
-      alert("Invalid recipe format.");
+  const aiMagic = async () => {
+    const urlOrText = prompt("Please enter the recipe text or URL");
+    // const urlOrText = "https://www.joshuaweissman.com/post/dan-dan-inspired-peanut-noodles-recipe";
+    if (!urlOrText) {
+      return
     }
+    const result = await summarizeRecipe(urlOrText);
+    setFromSavedRecipe(result.recipe);
+
+  }
+
+  const openImportDialog = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.addEventListener('change', (e) => {
+      const event = e as unknown as React.ChangeEvent<HTMLInputElement>;
+      handleFileImport(event);
+    });
+    input.click();
   };
 
   const addIngredient = () => {
@@ -273,7 +235,6 @@ const MainPage = () => {
       setNewIngredient({ ...EmptyIngredient });
       setNewIngredientName("");
     } else {
-      // Handle validation error
       alert("Please fill in all fields for the ingredient.");
     }
   };
@@ -382,6 +343,20 @@ const MainPage = () => {
           </Tbody>
         </Table>
       </Box>
+      <Box className="flex items-center justify-center">
+          Portions:
+          <Input
+            type="number"
+            name="portions"
+            value={portions}
+            onChange={(e) => setPortions(parseFloat(e.target.value))}
+            placeholder="Portions"
+            mr={2}
+            variant="flushed"
+            focusBorderColor="teal.300"
+            mb={2}
+          />
+        </Box>
       <Box mt={6} gap={1} display="flex" flexDir={"column"}>
         <Input
           type="text"
@@ -454,31 +429,10 @@ const MainPage = () => {
         >
           Add Ingredient
         </Button>
-        <Box className="flex items-center justify-center">
-          Portions:
-          <Input
-            type="number"
-            name="portions"
-            value={portions}
-            onChange={(e) => setPortions(parseFloat(e.target.value))}
-            placeholder="Portions"
-            mr={2}
-            variant="flushed"
-            focusBorderColor="teal.300"
-            mb={2}
-          />
-        </Box>
-        <Input
-          type="file"
-          accept=".json"
-          onChange={importRecipeFromFile}
-          variant="flushed"
-          focusBorderColor="teal.300"
-          mb={4}
-        />
-
-        <Button colorScheme="blue" onClick={importRecipeFromAlert} w="full">
-          Load from JSON
+       
+        <Button colorScheme="blue" onClick={aiMagic} w="full">Load recipe with AI</Button>
+        <Button colorScheme="blue" onClick={openImportDialog} w="full">
+          Import recipe
         </Button>
         <Button colorScheme="blue" onClick={exportRecipe} w="full">
           Export recipe
