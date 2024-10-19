@@ -129,8 +129,10 @@ const MainPage = () => {
 
     const recipe = SavedRecipeSchema.parse(JSON.parse(saved_query as string));
     setFromSavedRecipe(recipe);
-    debugger;
+    console.log("1337 pathname=", pathname)
+    console.log("1337 window.location=", window.location)
     window.history.replaceState(null, '', pathname)
+    console.log("1337 AFTER window.location=", window.location)
 
   }, [params, pathname, router]);
 
