@@ -129,7 +129,7 @@ const MainPage = () => {
 
     const recipe = SavedRecipeSchema.parse(JSON.parse(saved_query as string));
     setFromSavedRecipe(recipe);
-    router.replace(pathname);
+    // router.replace(pathname);
 
   }, [params, pathname, router]);
 
