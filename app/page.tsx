@@ -16,11 +16,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Fuse from "fuse.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ingredientsJsonRaw from "./ingredients.json";
-import { getOpenAiClient, summarizeRecipe } from "./ai";
 import { Ingredient, IngredientMacros, SavedRecipe, SavedRecipeSchema, Units } from "./types";
 import { LoadWithAiDialog } from "./components/LoadWithAiDialog";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
 
@@ -112,6 +112,26 @@ const MainPage = () => {
   const [suggestions, setSuggestions] = useState<IngredientMacros[]>([]);
 
   const [sortedByCals, setSortedByCals] = useState(false);
+
+  const router = useRouter();
+  const params = useSearchParams();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!params) {
+      return;
+    }
+
+    const saved_query = params.get('saved_query');
+    if (!saved_query) {
+      return
+    }
+
+    const recipe = SavedRecipeSchema.parse(JSON.parse(saved_query as string));
+    setFromSavedRecipe(recipe);
+    router.replace(pathname);
+
+  }, [params]);
 
   // Setup Fuse.js options
   const fuseOptions = {
@@ -351,87 +371,105 @@ const MainPage = () => {
           mb={2}
         />
       </Box>
-      <Box mt={6} gap={1} display="flex" flexDir={"column"}>
-        <Input
-          type="text"
-          name="name"
-          value={newIngredientName}
-          onChange={handleIngredientNameChange}
-          placeholder="New Ingredient Name"
-          autoComplete="off"
-          variant="flushed"
-          focusBorderColor="teal.300"
-          mb={2}
-        />
-        {suggestions.length > 0 && (
-          <VStack align="start" mt={2}>
-            {suggestions.map((suggestion) => (
-              <Button
-                key={suggestion.name}
-                variant="ghost"
-                justifyContent="start"
-                onClick={() => selectSuggestion(suggestion)}
-                _hover={{ bg: "teal.100" }}
-              >
-                {suggestion.name}
-              </Button>
-            ))}
-          </VStack>
-        )}
-        <Input
-          type="number"
-          name="amount"
-          value={newIngredient.amount || ""}
-          onChange={(e) =>
-            setNewIngredient({
-              ...newIngredient,
-              [e.target.name]: parseFloat(e.target.value),
-            })
-          }
-          placeholder="Amount"
-          mr={2}
-          variant="flushed"
-          focusBorderColor="teal.300"
-          mb={2}
-        />
-        <Select
-          name="unit"
-          value={newIngredient.unit || Units.Grams}
-          onChange={(e) =>
-            setNewIngredient({
-              ...newIngredient,
-              [e.target.name]: e.target.value,
-            })
-          }
-          placeholder="Select unit"
-          mr={2}
-          variant="flushed"
-          focusBorderColor="teal.300"
-          mb={4}
-        >
-          {Object.values(Units).map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </Select>
-        <Button
-          disabled={!newIngredient.macros}
-          colorScheme="blue"
-          onClick={addIngredient}
-          w="full"
-        >
-          Add Ingredient
-        </Button>
-
-        <Button colorScheme="blue" onClick={() => { setDialogId(Math.random().toString()); aiDialogDisclosur.onOpen(); }} w="full">Load recipe with AI</Button>
-        <Button colorScheme="blue" onClick={openImportDialog} w="full">
-          Import recipe
-        </Button>
-        <Button colorScheme="blue" onClick={exportRecipe} w="full">
-          Export recipe
-        </Button>
-        <LoadWithAiDialog key={dialogId} onClose={aiDialogDisclosur.onClose} isOpen={aiDialogDisclosur.isOpen} onRecipeLoaded={(recipe) => setFromSavedRecipe(recipe.recipe)} />
+      <Box width="100%" className="flex flex-row justify-center items-center">
+        <Box className="flex" width={"600px"} mt={6} gap={1} justifyItems={"center"} alignItems={"center"} flexDir={"column"}>
+          <Box className="w-full border-solid border-2 rounded-md p-2" >
+            <Input
+              type="text"
+              name="name"
+              value={newIngredientName}
+              onChange={handleIngredientNameChange}
+              placeholder="New Ingredient Name"
+              autoComplete="off"
+              variant="flushed"
+              focusBorderColor="teal.300"
+              mb={2}
+            />
+            {suggestions.length > 0 && (
+              <VStack align="start" mt={2}>
+                {suggestions.map((suggestion) => (
+                  <Button
+                    key={suggestion.name}
+                    variant="ghost"
+                    justifyContent="start"
+                    onClick={() => selectSuggestion(suggestion)}
+                    _hover={{ bg: "teal.100" }}
+                  >
+                    {suggestion.name}
+                  </Button>
+                ))}
+              </VStack>
+            )}
+            <Input
+              type="number"
+              name="amount"
+              value={newIngredient.amount || ""}
+              onChange={(e) =>
+                setNewIngredient({
+                  ...newIngredient,
+                  [e.target.name]: parseFloat(e.target.value),
+                })
+              }
+              placeholder="Amount"
+              mr={2}
+              variant="flushed"
+              focusBorderColor="teal.300"
+              mb={2}
+            />
+            <Select
+              name="unit"
+              value={newIngredient.unit || Units.Grams}
+              onChange={(e) =>
+                setNewIngredient({
+                  ...newIngredient,
+                  [e.target.name]: e.target.value,
+                })
+              }
+              placeholder="Select unit"
+              mr={2}
+              variant="flushed"
+              focusBorderColor="teal.300"
+              mb={4}
+            >
+              {Object.values(Units).map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </Select>
+            <Button
+              disabled={!newIngredient.macros}
+              colorScheme="blue"
+              onClick={addIngredient}
+              w="full"
+            >
+              Add Ingredient
+            </Button>
+          </Box>
+          <Box width={"250px"} mt={6} gap={1} display="flex" flexDir={"column"}>
+            <Button colorScheme="blue" onClick={() => { setDialogId(Math.random().toString()); aiDialogDisclosur.onOpen(); }} w="full">Load recipe with AI</Button>
+            <Button colorScheme="blue" onClick={openImportDialog} w="full">
+              Import recipe
+            </Button>
+            <Button colorScheme="blue" onClick={exportRecipe} w="full">
+              Export recipe
+            </Button>
+            <Button colorScheme="blue" onClick={() => {
+              const recipeData: SavedRecipe = {
+                recipeTitle,
+                ingredients,
+                portions,
+              };
+              const recipeDataJson = JSON.stringify(recipeData, null, 2);
+              const url = `${window.location.origin}${window.location.pathname}?saved_query=${encodeURIComponent(recipeDataJson)}`;
+              navigator.clipboard.writeText(url);
+              alert("Recipe URL copied to clipboard!");
+            }} w="full">
+              Share this recipe
+            </Button>
+            <LoadWithAiDialog key={dialogId} onClose={aiDialogDisclosur.onClose} isOpen={aiDialogDisclosur.isOpen} onRecipeLoaded={(recipe) => setFromSavedRecipe(recipe.recipe)} />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

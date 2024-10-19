@@ -33,37 +33,25 @@ export function LoadWithAiDialog({ isOpen, onClose, onRecipeLoaded }: LoadWithAi
             onClose={onClose}
         >
             <AlertDialogOverlay>
-                <AlertDialogContent>
+                <AlertDialogContent w='900px'>
                     <AlertDialogHeader fontSize='lg' fontWeight='bold'>
                         Load recipe with AI
                     </AlertDialogHeader>
 
                     <AlertDialogBody>
-
                         <Box className="flex flex-col gap-2">
                             <Textarea className="w-full" placeholder='Paste your recipe content or URL here...'
                                 value={recipeInput}
-                                disabled={loading}
+                                isDisabled={loading}
                                 onChange={(e) => setRecipeInput(e.target.value)} />
-                            <Button className="w-full" disabled={(!recipeInput) || loading} onClick={handleProcessClick}>Process</Button>
-
+                            <Button className="w-full" isDisabled={(!recipeInput) || loading} onClick={handleProcessClick}>Process</Button>
                             {recipeSummarizedMessages && <><h1>Got summarize ingredients:</h1>
-                                <Textarea disabled value={recipeSummarizedMessages[recipeSummarizedMessages.length - 1].content?.toString()} />
+                                <Textarea isDisabled value={recipeSummarizedMessages[recipeSummarizedMessages.length - 1].content?.toString()} />
                                 <h1>Processing to UI format...</h1>
                             </>
                             }
                         </Box>
-
                     </AlertDialogBody>
-
-                    {/* <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='red' onClick={onClose} ml={3}>
-                            Delete
-                        </Button>
-                    </AlertDialogFooter> */}
                 </AlertDialogContent>
             </AlertDialogOverlay>
         </AlertDialog>
