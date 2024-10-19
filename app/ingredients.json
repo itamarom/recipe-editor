@@ -42,6 +42,12 @@
     "grams_per_cup": 240
   },
   {
+    "name": "Non-fat Greek Yogurt",
+    "calories_per_gram": 0.59,
+    "protein_per_gram": 0.1,
+    "grams_per_cup": 240
+  },
+  {
     "name": "Chicken breast (raw)",
     "calories_per_gram": 1.2,
     "protein_per_gram": 0.21
@@ -363,6 +369,12 @@
     "protein_per_gram": 0.06,
     "grams_per_cup": 150,
     "grams_per_unit": 6
+  },
+  {
+    "name": "Vanilla extract",
+    "calories_per_gram": 0.33,
+    "protein_per_gram": 0.0,
+    "grams_per_unit": 5
   },
   {
     "name": "Beef cut #14 (Avazit)",
