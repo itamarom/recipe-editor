@@ -12,6 +12,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Fuse from "fuse.js";
@@ -19,6 +20,7 @@ import { useState } from "react";
 import ingredientsJsonRaw from "./ingredients.json";
 import { getOpenAiClient, summarizeRecipe } from "./ai";
 import { Ingredient, IngredientMacros, SavedRecipe, SavedRecipeSchema, Units } from "./types";
+import { LoadWithAiDialog } from "./components/LoadWithAiDialog";
 
 const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
 
@@ -96,6 +98,9 @@ const EmptyIngredient: Partial<Ingredient> = {
 };
 
 const MainPage = () => {
+  const aiDialogDisclosur = useDisclosure()
+  const [dialogId, setDialogId] = useState("");
+
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [newIngredient, setNewIngredient] = useState<Partial<Ingredient>>({
@@ -198,19 +203,6 @@ const MainPage = () => {
 
     reader.readAsText(file);
   };
-
-  const aiMagic = async () => {
-    const client = getOpenAiClient();
-
-    const urlOrText = prompt("Please enter the recipe text or URL");
-    // const urlOrText = "https://www.joshuaweissman.com/post/dan-dan-inspired-peanut-noodles-recipe";
-    if (!urlOrText) {
-      return
-    }
-    const result = await summarizeRecipe(client, urlOrText);
-    setFromSavedRecipe(result.recipe);
-
-  }
 
   const openImportDialog = () => {
     const input = document.createElement('input');
@@ -346,19 +338,19 @@ const MainPage = () => {
         </Table>
       </Box>
       <Box className="flex items-center justify-center">
-          Portions:
-          <Input
-            type="number"
-            name="portions"
-            value={portions}
-            onChange={(e) => setPortions(parseFloat(e.target.value))}
-            placeholder="Portions"
-            mr={2}
-            variant="flushed"
-            focusBorderColor="teal.300"
-            mb={2}
-          />
-        </Box>
+        Portions:
+        <Input
+          type="number"
+          name="portions"
+          value={portions}
+          onChange={(e) => setPortions(parseFloat(e.target.value))}
+          placeholder="Portions"
+          mr={2}
+          variant="flushed"
+          focusBorderColor="teal.300"
+          mb={2}
+        />
+      </Box>
       <Box mt={6} gap={1} display="flex" flexDir={"column"}>
         <Input
           type="text"
@@ -431,14 +423,15 @@ const MainPage = () => {
         >
           Add Ingredient
         </Button>
-       
-        <Button colorScheme="blue" onClick={aiMagic} w="full">Load recipe with AI</Button>
+
+        <Button colorScheme="blue" onClick={() => { setDialogId(Math.random().toString()); aiDialogDisclosur.onOpen(); }} w="full">Load recipe with AI</Button>
         <Button colorScheme="blue" onClick={openImportDialog} w="full">
           Import recipe
         </Button>
         <Button colorScheme="blue" onClick={exportRecipe} w="full">
           Export recipe
         </Button>
+        <LoadWithAiDialog key={dialogId} onClose={aiDialogDisclosur.onClose} isOpen={aiDialogDisclosur.isOpen} onRecipeLoaded={(recipe) => setFromSavedRecipe(recipe.recipe)} />
       </Box>
     </Box>
   );

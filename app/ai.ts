@@ -48,7 +48,7 @@ export function getOpenAiClient() {
   });
 }
 
-export async function summarizeRecipe(client: OpenAI, urlOrText: string) {
+export async function summarizeRecipeInFreetext(client: OpenAI, urlOrText: string) {
   // if (urlOrText.startsWith('http')) {
   //   const urlContent = await fetch('https://corsproxy.io/?' + encodeURI(urlOrText));
   //   urlOrText = await urlContent.text()
@@ -69,9 +69,13 @@ export async function summarizeRecipe(client: OpenAI, urlOrText: string) {
 
 
   messages.push({ "role": "assistant", "content": completion.choices[0].message.content })
-  messages.push({ "role": "user", "content": queryStructured })
 
+  return messages
+}
+
+export async function summarizeRecipeInObject(client: OpenAI, messages: ChatCompletionMessageParam[]) {
   //   const messages: ChatCompletionMessageParam[] = [...]
+  messages.push({ "role": "user", "content": queryStructured })
   console.log('kek 3 messages=', messages)
 
   const format = zodResponseFormat(QueryOutputSchema, 'query_output');
