@@ -131,7 +131,7 @@ const MainPage = () => {
     setFromSavedRecipe(recipe);
     router.replace(pathname);
 
-  }, [params]);
+  }, [params, pathname, router]);
 
   // Setup Fuse.js options
   const fuseOptions = {
