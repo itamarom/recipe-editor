@@ -17,7 +17,7 @@ import {
 import Fuse from "fuse.js";
 import { useState } from "react";
 import ingredientsJsonRaw from "./ingredients.json";
-import { summarizeRecipe } from "./ai";
+import { getOpenAiClient, summarizeRecipe } from "./ai";
 import { Ingredient, IngredientMacros, SavedRecipe, SavedRecipeSchema, Units } from "./types";
 
 const ingredientsJson: IngredientMacros[] = ingredientsJsonRaw;
@@ -200,12 +200,14 @@ const MainPage = () => {
   };
 
   const aiMagic = async () => {
+    const client = getOpenAiClient();
+
     const urlOrText = prompt("Please enter the recipe text or URL");
     // const urlOrText = "https://www.joshuaweissman.com/post/dan-dan-inspired-peanut-noodles-recipe";
     if (!urlOrText) {
       return
     }
-    const result = await summarizeRecipe(urlOrText);
+    const result = await summarizeRecipe(client, urlOrText);
     setFromSavedRecipe(result.recipe);
 
   }

@@ -3,13 +3,10 @@ import OpenAI from 'openai';
 import { zodResponseFormat } from "openai/helpers/zod";
 import { AllTypesReflection, IngredientMacrosSchema, QueryOutputSchema } from "./types";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { getCookie, setCookie } from "cookies-next";
 
-const openAiKey = 'KEY_HERE'
 
-const client = new OpenAI({
-  apiKey: openAiKey,
-  dangerouslyAllowBrowser: true
-});
+const openAiKeyCookieName = 'openai_key'
 
 const queryStructured = `
 Here is a TS structure: ${AllTypesReflection}
@@ -27,15 +24,44 @@ Output the recipe as valid QueryOutput object in JSON format.
 I will tip you 1000$ if you do this correctly.
 `
 
-export async function summarizeRecipe(urlOrText: string) {
-  const urlToRecipePrompt = `Here is a recipe: ${urlOrText}
-  Please give me only the ingredients list`
-  console.log(query)
+export function getOpenAiKey() {
+  let openAiKey: string | undefined | null = getCookie(openAiKeyCookieName);
+  if (openAiKey) {
+    return openAiKey;
+  }
+
+  openAiKey = prompt('Enter your OpenAI key:');
+  if (!openAiKey) {
+    throw new Error('No OpenAI key found');
+  }
+
+  setCookie(openAiKeyCookieName, openAiKey, { maxAge: 60 * 60 * 24 * 365 });
+
+  return openAiKey;
+}
+
+export function getOpenAiClient() {
+  return new OpenAI({
+    apiKey: getOpenAiKey(),
+    dangerouslyAllowBrowser: true
+  });
+}
+
+export async function summarizeRecipe(client: OpenAI, urlOrText: string) {
+  let urlToRecipePrompt = '';
+  if (urlOrText.startsWith('http')) {
+    urlToRecipePrompt = `Here is link to a recipe: ${urlOrText}
+    Please fetch the recipe and give me only the ingredients list`
+  } else {
+    urlToRecipePrompt = `Here is a recipe: ${urlOrText}
+    Please give me only the ingredients list`
+  }
+
   console.log('kek 1')
   const messages: any[] = []
   messages.push({ "role": "user", "content": urlToRecipePrompt })
   const completion = await client.chat.completions.create({
-    model: "gpt-4",
+    model: "gpt-4o-2024-08-06",
     messages: messages,
   });
   console.log('kek 2 completion=', completion.choices[0].message.content)
