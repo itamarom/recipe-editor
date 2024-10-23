@@ -374,7 +374,8 @@
     "name": "Vanilla extract",
     "calories_per_gram": 0.33,
     "protein_per_gram": 0.0,
-    "grams_per_unit": 5
+    "grams_per_unit": 5,
+    "grams_per_cup": 208
   },
   {
     "name": "Beef cut #14 (Avazit)",
