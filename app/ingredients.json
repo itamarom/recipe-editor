@@ -18,6 +18,18 @@
     "grams_per_cup": 125
   },
   {
+    "name": "Lima beans (dry)",
+    "calories_per_gram": 1.64,
+    "protein_per_gram": 0.08,
+    "grams_per_cup": 178
+  },
+  {
+    "name": "Frozen peas",
+    "calories_per_gram": 0.81,
+    "protein_per_gram": 0.05,
+    "grams_per_cup": 160
+  },
+  {
     "name": "Egg (large)",
     "calories_per_gram": 1.55,
     "protein_per_gram": 0.13,
@@ -51,6 +63,11 @@
     "name": "Chicken breast (raw)",
     "calories_per_gram": 1.2,
     "protein_per_gram": 0.21
+  },
+  {
+    "name": "Spinach",
+    "calories_per_gram": 0.23,
+    "protein_per_gram": 0.03
   },
   {
     "name": "Rice Krispies",
@@ -392,6 +409,16 @@
     "calories_per_gram": 0.8,
     "protein_per_gram": 0.018,
     "grams_per_cup": 240
+  },
+  {
+    "name": "Redefine Minced meat",
+    "calories_per_gram": 1.76,
+    "protein_per_gram": 0.11
+  },
+  {
+    "name": "Redefine Bratwurst",
+    "calories_per_gram": 1.99,
+    "protein_per_gram": 0.15
   },
   {
     "name": "Chicken broth",
