@@ -36,6 +36,12 @@
     "grams_per_unit": 57
   },
   {
+    "name": "Egg white (large)",
+    "calories_per_gram": 0.52,
+    "protein_per_gram": 0.11,
+    "grams_per_unit": 35
+  },
+  {
     "name": "Milk (whole)",
     "calories_per_gram": 0.6,
     "protein_per_gram": 0.03,
@@ -307,6 +313,11 @@
     "name": "Spaghetti (raw)",
     "calories_per_gram": 3.56,
     "protein_per_gram": 0.13
+  },
+  {
+    "name": "Red Lentil Pasta",
+    "calories_per_gram": 3.34,
+    "protein_per_gram": 0.26
   },
   {
     "name": "Caramelized Almonds chocolate snack",
